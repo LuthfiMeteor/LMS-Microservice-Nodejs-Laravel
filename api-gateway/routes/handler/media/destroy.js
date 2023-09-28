@@ -6,7 +6,7 @@ const api = apiAdapter('http://localhost:8080/media');
 module.exports = async (req, res) => {
   try {
     const id = req.params.id;
-    const media = await api.delete(`/${id}`);
+    const media = await api.delete(`${id}`);
     return res.json(media.data);
     // return res.json(api);
   } catch (error) {

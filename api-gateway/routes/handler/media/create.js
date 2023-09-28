@@ -5,7 +5,7 @@ const api = apiAdapter('http://localhost:8080/media');
 
 module.exports = async (req, res) => {
   try {
-    const media = await api.post('/',req.body);
+    const media = await api.post(URL_SERVICE_MEDIA,req.body);
     return res.json(media.data);
     // return res.json(api);
   } catch (error) {
