@@ -8,7 +8,21 @@ const { Media } = require('../models');
 
 const { HOSTNAME } = process.env;
 
-/* GET users listing. */
+
+router.get('/', async(req, res) => {
+  const media = await Media.findAll({
+     attributes: ['id', 'image']
+  });
+  const mappedmedia = media.map((m) => {
+    m.image = `${req.get('host')}/${m.image}`;
+    return m;
+  })
+  return res.json({
+    status: 'succes',
+    data: media
+  })
+})
+
 router.post('/', (req, res) => {
   const image = req.body.image;
 
@@ -35,5 +49,25 @@ router.post('/', (req, res) => {
 
   })
 });
+
+router.delete('/:id', async (req, res) => {
+  const id =  req.params.id;
+  const media = await Media.findByPk(id);
+  if (!media) {
+    return res.status(404).json({status:'error', message:'file tidak ditemukan'});
+  }
+  fs.unlink(`./public/${media.image}`, async(err)=>{
+    if (err) {
+      return res.status(400).json({status:'error', message:err.message});
+    }
+    await media.destroy();
+    return res.json({
+      status:'berhasil',
+      message:'image deleted',
+    });
+  });
+})
+
+
 
 module.exports = router;
