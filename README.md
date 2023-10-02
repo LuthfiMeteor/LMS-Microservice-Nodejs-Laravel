@@ -19,4 +19,4 @@ Before you can run this project, make sure you have the following requirements m
    Clone this repository to your local directory:
 
    ```bash
-   git clone https://github.com/yourproject/LMS-Microservice-Nodejs-Laravel.git
+   git clone https://github.com/LuthfiMeteor/LMS-Microservice-Nodejs-Laravel.git
