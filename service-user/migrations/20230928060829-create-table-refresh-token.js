@@ -1,51 +1,44 @@
 'use strict';
 
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('refresh_tokens', { 
       id: {
-        type:Sequelize.INTEGER,
+        type: Sequelize.INTEGER,
         primaryKey: true,
-        allowNull:false,
         autoIncrement: true,
+        allowNull: false
       },
       token: {
-        type:Sequelize.TEXT,
-        allowNull:false,
+        type: Sequelize.TEXT,
+        allowNull: false
       },
       user_id: {
-        type:Sequelize.INTEGER,
-        allowNull:false,
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       created_at: {
-        type:Sequelize.DATE,
-        allowNull:false,
+        type: Sequelize.DATE,
+        allowNull: true
       },
       updated_at: {
-        type:Sequelize.DATE,
-        allowNull:false,
-      },
+        type: Sequelize.DATE,
+        allowNull: true
+      }
     });
-    
+
     await queryInterface.addConstraint('refresh_tokens', {
-      type:'foreign key',
-      name:'REFRESH_TOKENS_USER_ID',
-      fields:['user_id'],
-      references:{
-        table:'users',
-        field:'id'
+      type: 'foreign key',
+      name: 'REFRESH_TOKENS__USER_ID',
+      fields: ['user_id'],
+      references: {
+        table: 'users',
+        field: 'id'
       }
     });
   },
 
-  async down (queryInterface, Sequelize) {
-    /**
-     * Add reverting commands here.
-     *
-     * Example:
-     * await queryInterface.dropTable('users');
-     */
-    return queryInterface.dropTable('refresh_tokens');
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('refresh_tokens');
   }
 };

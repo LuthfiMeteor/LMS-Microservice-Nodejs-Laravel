@@ -28,4 +28,21 @@ module.exports = async (req, res) => {
             message: 'email already exist',
         })
     }
+    const password = await bcrypt.hash(req.body.password, 10);
+
+    const data = {
+        password,
+        name:req.body.name,
+        email:req.body.email,
+        role:'student',
+        profession:req.body.profession,
+    };
+
+    const createUser =  await User.create(data);
+    return res.json({
+        status: 'succes',
+        data: {
+            id: createUser.id
+        }
+    })
 }
